@@ -11,7 +11,9 @@
             <label for="language-select"></label>
             <select name="language" id="language-select">
                 <option value="">--Please choose an option--</option>
-                <option th:each="option : ${options}" th:value="${option.getValue}" th:text="${option.getKey}"></option>
+                <th:block th:each="option : ${options}">
+                <option th:value="${option.getValue}" th:text="${option.getKey}"></option>
+                </th:block>
             </select>
         <input type='submit' value='Greet me!'>
     </form>
