@@ -1,12 +1,14 @@
 package org.launchcode.hellospring.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Controller
-@ResponseBody
 @RequestMapping("hello")
 public class HelloController {
 
@@ -16,6 +18,7 @@ public class HelloController {
     }
 
     @RequestMapping(method= {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
     public String helloWithQuerParm(@RequestParam String name, String  language) {
 
         if (Objects.equals(language, "")) {
@@ -30,25 +33,17 @@ public class HelloController {
     }
 
     @GetMapping("form")
-    public String helloForm(){
-        return "<html>" +
-                "<body>" +
-                "<form action = '/hello' method = 'post'>" +
-                "<input type='text' name='name' value= name " +
-                "<label for=\"language-select\"></label>\n" +
-                "\n" +
-                "<select name=\"language\" id=\"language-select\">\n" +
-                "    <option value=\"\">--Please choose an option--</option>\n" +
-                "    <option value=\"Bonjour\">French</option>\n" +
-                "    <option value=\"Hola\">Spanish</option>\n" +
-                "    <option value=\"Ciao\">Italian</option>\n" +
-                "    <option value=\"Konnichiwa\">Japanese</option>\n" +
-                "    <option value=\"Annyeonghaseyo\">Korean</option>\n" +
-                "    <option value=\"Nihau\n" + "\n\">Mandarin</option>\n" +
-                "</select> " +
-                "<input type='submit' value='Greet me!'>" +
-                "</form>" +
-                "</body>" +
-                "</html>";
+    public String helloForm(Model model){
+        HashMap<String, String> options = new HashMap();
+        options.put("French", "Bonjour");
+        options.put("Spanish", "Hola");
+        options.put("Italian", "Ciao");
+        options.put("Japanese", "Konnichiwa");
+        options.put("Korean", "Annyeonghaseyo");
+        options.put("Mandarin", "Nihau");
+        options.put("JOJO", " Hi There");
+        model.addAttribute("options", options);
+        return "form";
     }
+
 }
